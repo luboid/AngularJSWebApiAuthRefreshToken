@@ -1,0 +1,12 @@
+﻿<h2>Email address confirmation.</h2>
+<div class="row">
+    <div class="col-md-12">
+        <div class="alert alert-success" ng-show="ctrl.success">
+            You confirm email address!<br />
+            <a ui-sref="account.login">LogIn</a>
+        </div>
+        <bk-alert type="danger" hide="ctrl.error.hidden">
+            <div ng-bind-html="ctrl.error.message"></div>
+        </bk-alert>
+    </div>
+</div>
