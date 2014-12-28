@@ -60,8 +60,11 @@
                         for (i in roles) {
                             hash[roles[i]] = true;
                         }
+                    	return hash;
                     }
-                    return hash;
+		    else {
+			return roles;
+		    }
                 }
 
                 function assignToken(token) {
@@ -128,7 +131,7 @@
                         if (roles.length !== 0 && state.isAuthenticated) {
                             roles = roles.filter(function (role) {
                                 if (angular.isArray(role)) {
-                                    return this.isInRole(role);
+                                    return this.isInRole.apply(this,role);
                                 }
                                 else {
                                     return !!state.token.roles[role];
