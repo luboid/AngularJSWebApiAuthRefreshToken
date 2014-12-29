@@ -19,6 +19,7 @@ using AngularJSAuthRefreshToken.Web.AspNetIdentity;
 using AngularJSAuthRefreshToken.Web.Providers;
 using System.Threading;
 using System.Net;
+using System.Security.Principal;
 
 
 
@@ -124,47 +125,43 @@ namespace AngularJSAuthRefreshToken.Web.Controllers.Api
             return Ok();
         }
 
-        // GET api/Account/ManageInfo?returnUrl=%2F&generateState=true
-        [Route("ManageInfo")]
-        public async Task<ManageInfoViewModel> GetManageInfo(string returnUrl, bool generateState = false, string client_id =null)
+        // GET api/Account/Profile
+        [Route("Profile")]//ManageInfo
+        public async Task<ProfileViewModel> GetProfile([IPrincipal] IPrincipal principal)
         {
-            IdentityUser user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+            IdentityUser user = await UserManager.FindByIdAsync(principal.GetUserId());
 
             if (user == null)
             {
                 return null;
             }
 
-            List<UserLoginInfoViewModel> logins = (await UserManager.GetLoginsAsync(user.Id))
-                .Select(l => new UserLoginInfoViewModel
+            List<UserLoginProvidersViewModel> logins = (await UserManager.GetLoginsAsync(user.Id))
+                .Select(l => new UserLoginProvidersViewModel
                 {
-                    LoginProvider = l.LoginProvider,
-                    ProviderKey = l.ProviderKey
-                }).ToList();
+                    Provider = l.LoginProvider,
+                    Key = l.ProviderKey
+                }).OrderBy(l=> l.Provider).ToList();
 
             if (user.PasswordHash != null)
             {
-                logins.Add(new UserLoginInfoViewModel
+                logins.Insert(0, new UserLoginProvidersViewModel
                 {
-                    LoginProvider = ApplicationOAuthProvider.LocalLoginProvider,
-                    ProviderKey = user.UserName,
+                    Provider = ApplicationOAuthProvider.LocalLoginProvider,
+                    Key = user.Email,
                 });
             }
 
-            return new ManageInfoViewModel
-            {
-                LocalLoginProvider = ApplicationOAuthProvider.LocalLoginProvider,
-                Email = user.UserName,
-                Logins = logins,
-                ExternalLoginProviders = await GetExternalLogins(returnUrl, generateState, client_id)
-            };
+            return new ProfileViewModel { Logins = logins };
         }
 
         // POST api/Account/ChangePassword
         [Route("ChangePassword")]
-        public async Task<IHttpActionResult> ChangePassword(ChangePasswordBindingModel model)
+        public async Task<IHttpActionResult> ChangePassword([IPrincipal] IPrincipal principal, ChangePasswordBindingModel model)
         {
-            IdentityResult result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword,
+            IdentityResult result = await UserManager.ChangePasswordAsync(
+                principal.GetUserId(), 
+                model.OldPassword,
                 model.NewPassword);
             
             if (!result.Succeeded)
@@ -177,9 +174,9 @@ namespace AngularJSAuthRefreshToken.Web.Controllers.Api
 
         // POST api/Account/SetPassword
         [Route("SetPassword")]
-        public async Task<IHttpActionResult> SetPassword(SetPasswordBindingModel model)
+        public async Task<IHttpActionResult> SetPassword([IPrincipal] IPrincipal principal, SetPasswordBindingModel model)
         {
-            var result = await UserManager.AddPasswordAsync(User.Identity.GetUserId(), model.NewPassword);
+            var result = await UserManager.AddPasswordAsync(principal.GetUserId(), model.NewPassword);
 
             if (!result.Succeeded)
             {
@@ -191,7 +188,7 @@ namespace AngularJSAuthRefreshToken.Web.Controllers.Api
 
         // POST api/Account/AddExternalLogin
         [Route("AddExternalLogin")]
-        public async Task<IHttpActionResult> AddExternalLogin(AddExternalLoginBindingModel model)
+        public async Task<IHttpActionResult> AddExternalLogin([IPrincipal] IPrincipal principal, AddExternalLoginBindingModel model)
         {
             Authentication.SignOut(DefaultAuthenticationTypes.ExternalCookie);
 
@@ -211,7 +208,7 @@ namespace AngularJSAuthRefreshToken.Web.Controllers.Api
                 return BadRequest("The external login is already associated with an account.");
             }
 
-            IdentityResult result = await UserManager.AddLoginAsync(User.Identity.GetUserId(),
+            IdentityResult result = await UserManager.AddLoginAsync(principal.GetUserId(),
                 new UserLoginInfo(externalData.LoginProvider, externalData.ProviderKey));
 
             if (!result.Succeeded)
@@ -224,18 +221,18 @@ namespace AngularJSAuthRefreshToken.Web.Controllers.Api
 
         // POST api/Account/RemoveLogin
         [Route("RemoveLogin")]
-        public async Task<IHttpActionResult> RemoveLogin(RemoveLoginBindingModel model)
+        public async Task<IHttpActionResult> RemoveLogin([IPrincipal] IPrincipal principal, RemoveLoginBindingModel model)
         {
             IdentityResult result;
 
-            if (model.LoginProvider == ApplicationOAuthProvider.LocalLoginProvider)
+            if (model.Provider == ApplicationOAuthProvider.LocalLoginProvider)
             {
-                result = await UserManager.RemovePasswordAsync(User.Identity.GetUserId());
+                result = await UserManager.RemovePasswordAsync(principal.GetUserId());
             }
             else
             {
-                result = await UserManager.RemoveLoginAsync(User.Identity.GetUserId(),
-                    new UserLoginInfo(model.LoginProvider, model.ProviderKey));
+                result = await UserManager.RemoveLoginAsync(principal.GetUserId(),
+                    new UserLoginInfo(model.Provider, model.Key));
             }
 
             if (!result.Succeeded)
@@ -334,7 +331,8 @@ namespace AngularJSAuthRefreshToken.Web.Controllers.Api
 
             return descriptions.Select(description => new ExternalLoginViewModel
                 {
-                    Name = description.Caption,
+                    Caption = description.Caption,
+                    Provider = description.AuthenticationType,
                     Url = Url.Route("ExternalLogin", new
                     {
                         provider = description.AuthenticationType,

@@ -93,7 +93,25 @@
                         return $http.post(this.apiUrl + 'confirmemail', params)
                         .then(function (data) { return data.data; })
                         .catch(function (state) {
-                            $log.error(state);//state -> {data, status, headers, config}
+                            $log.error(state);
+                            throw state;
+                        });
+                    },
+                    profile: function () {
+                        return $http.get(this.apiUrl + 'profile')
+                            .then(function (data) {
+                                return data.data;
+                            })
+                            .catch(function (state) {
+                                $log.error(state);
+                                throw state;
+                            });
+                    },
+                    removeLogin: function (params) {
+                        return $http.post(this.apiUrl + 'removelogin', params)
+                        .then(function (data) { return data.data; })
+                        .catch(function (state) {
+                            $log.error(state);
                             throw state;
                         });
                     }

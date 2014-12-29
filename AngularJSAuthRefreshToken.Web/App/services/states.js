@@ -31,11 +31,11 @@
             externalLoginCallbackUrl: function () {
                 return this.hostUrl() + '/externallogin.html';
             },
-            confirmEmailUrl: function () {//emailConfirmationUrl
-                return this.applicationLocationUrl() + 'account/confirmemail?uid={0}&cid={1}';
+            confirmEmailUrl: function () {
+                return this.applicationLocationUrl() + 'account/confirmemail#uid={0}&cid={1}';
             },
-            resetPasswordUrl: function () {//passwordConfirmationUrl
-                return this.applicationLocationUrl() + 'account/resetpassword?uid={0}&cid={1}';
+            resetPasswordUrl: function () {
+                return this.applicationLocationUrl() + 'account/resetpassword#uid={0}&cid={1}';
             }
         })
         .config(['$stateProvider', '$urlRouterProvider', '$locationProvider', 'ea.urlFactory',
@@ -74,7 +74,7 @@
                         }],
                         // Note: abstract still needs a ui-view for its children to populate.
                         // You can simply add it inline here.
-                        template: '<ui-view/>',
+                        template: '<ui-view class="row col-md-12" />',
                         data: {
                             auth: true
                         }
@@ -126,14 +126,15 @@
                         }
                     })
                     .state("account.confirmemail", {
-                        url: "/confirmemail?uid&cid",
+                        url: "/confirmemail",
                         templateUrl: urlFactory.templateUrl('account', 'confirmemail'),
                         controller: 'ConfirmeMailCtrl as ctrl',
                         resolve: {
-                            confirmEmail: ['$stateParams', 'ea.data', function ($stateParams, data) {
+                            confirmEmail: ['$location', 'bk.utils', 'ea.data', function ($location, utils, data) {
+                                var params = utils.decodeFromUrl($location.hash());
                                 return data.account.confirmEmail({
-                                    userId: $stateParams.uid,
-                                    code: $stateParams.cid
+                                    userId: params.uid,
+                                    code: params.cid
                                 }).catch(function (state) {
                                     return state;//resolve promise with error state
                                 });
@@ -144,7 +145,7 @@
                         }
                     })
                     .state("account.resetpassword", {
-                        url: "/resetpassword?uid&cid",
+                        url: "/resetpassword",
                         templateUrl: urlFactory.templateUrl('account', 'resetpassword'),
                         controller: 'ResetPasswordCtrl as ctrl',
                         data: {
@@ -154,7 +155,15 @@
                     .state("account.profile", {
                         url: "/profile",
                         templateUrl: urlFactory.templateUrl('account', 'profile'),
-                        controller: 'ProfileCtrl as ctrl'
+                        controller: 'ProfileCtrl as ctrl',
+                        resolve: {
+                            profile: ['ea.data', function (data) {
+                                return data.account.profile();
+                            }],
+                            externalLogins: ['ea.authentication', function (authentication) {
+                                return authentication.externalLogins();
+                            }]
+            }
                     })
                     //#endregion account states/routes
                     .state("test", {

@@ -1,6 +1,11 @@
 ﻿(function (window, document, angular) {
     'use strict';
 
+    // need to think about some mechanism (how to work out) to detect divice/browser from whom was 
+    // and to clear unneeded refresh token without or before some toask on the server to clear them on expiry time
+    // see logIn what I'am try to do but this invalidate dialog promise and fail retry request authenticationInterceptor
+    // logOut before logIn
+
     angular.module('ea.services')
         .service('ea.authentication', ['$rootScope', '$timeout', '$q', '$log', 'bk.utils', 'ea.config', 'ea.urlFactory', 'ea.data', 'ea.resources',
             function ($rootScope, $timeout, $q, $log, utils, config, urlFactory, data, messages) {
@@ -60,11 +65,11 @@
                         for (i in roles) {
                             hash[roles[i]] = true;
                         }
-                    	return hash;
+                        return hash;
                     }
-		    else {
-			return roles;
-		    }
+                    else {
+                        return roles;
+                    }
                 }
 
                 function assignToken(token) {
@@ -131,7 +136,7 @@
                         if (roles.length !== 0 && state.isAuthenticated) {
                             roles = roles.filter(function (role) {
                                 if (angular.isArray(role)) {
-                                    return this.isInRole.apply(this,role);
+                                    return this.isInRole.apply(this, role);
                                 }
                                 else {
                                     return !!state.token.roles[role];
@@ -156,14 +161,15 @@
                             cridentials.client_secret = config.client_secret;
                         }
 
-                        var lCallback = angular.bind(null, logIn, cridentials);
+                        return logIn(cridentials);
+                        /*var lCallback = angular.bind(null, logIn, cridentials);
                         if (state.token && state.token.refresh_token) {
                             //we need to drop old refresh token, before login again
                             return this.logOut().then(lCallback, lCallback);
                         }
                         else {
                             return lCallback();
-                        }
+                        }*/
                     },
                     refresh: function () {
                         var cridentials = {

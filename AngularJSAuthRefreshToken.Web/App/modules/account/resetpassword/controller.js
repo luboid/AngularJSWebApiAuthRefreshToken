@@ -2,8 +2,9 @@
     'use strict';
 
     angular.module('ea.controllers')
-      .controller('ResetPasswordCtrl', ['$state', '$stateParams', 'ea.resources', 'bk.utils', 'ea.data', function ($state, $stateParams, resources, utils, data) {
-          var ctrl = this;
+      .controller('ResetPasswordCtrl', ['$state', '$location', 'ea.resources', 'bk.utils', 'ea.data', function ($state, $location, resources, utils, data) {
+          var ctrl = this,
+              params = utils.decodeFromUrl($location.hash());
 
           utils.errorContext.init(this);// инициализира контекста за показване на грешка при запис
 
@@ -16,14 +17,13 @@
           };
 
           this.model = {
-              userId: $stateParams.uid,
-              code: $stateParams.cid,
+              userId: params.uid,
+              code: params.cid,
               password: undefined,
               confirmPassword: undefined
           };
 
           this.submitForm = function () {
-              debugger;
               if (this.form.$valid) {
                   data.account.resetPassword(this.model)
                       .then(function () {

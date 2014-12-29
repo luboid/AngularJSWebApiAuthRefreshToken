@@ -1,0 +1,23 @@
+﻿<h2>Profile.</h2>
+<accordion>
+    <accordion-group heading="Set local password" is-disabled="ctrl.addPasswordDisabled">
+        Set local password.
+    </accordion-group>
+    <accordion-group heading="Change password" is-disabled="!ctrl.addPasswordDisabled">
+        Change password
+    </accordion-group>
+    <accordion-group heading="LogIn services" is-disabled="ctrl.externalLoginDisabled">
+        <div class="row">
+            <div class="col-md-4">
+                <h4>Active.</h4>
+                <a ng-repeat="external in ctrl.activeExternalLogins" class="btn btn-default btn-block"
+                   ng-click="ctrl.removeExternalLogin(external)"><i class="glyphicon glyphicon-remove"></i>&nbsp;&nbsp;{{external.caption}}</a>
+            </div>
+            <div class="col-md-4">
+                <h4>Public profile services.</h4>
+                <a ng-repeat="external in ctrl.externalLogins" class="btn btn-default btn-block"
+                   ng-click="ctrl.externalLogin(external)"><i class="glyphicon glyphicon-plus"></i>&nbsp;&nbsp;{{external.caption}}</a>
+            </div>
+        </div>
+    </accordion-group>
+</accordion>

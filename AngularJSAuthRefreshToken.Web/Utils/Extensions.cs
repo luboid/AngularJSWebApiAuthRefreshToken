@@ -35,9 +35,9 @@ namespace AngularJSAuthRefreshToken.Web
             return callback;
         }
 
-        public static long GetUserId(this IPrincipal principal)
+        public static string GetUserId(this IPrincipal principal)
         {
-            return Convert.ToInt64(principal.Identity.GetUserId());
+            return principal.Identity.GetUserId();
         }
 
         public static string Base64ToUrlToken(string value)

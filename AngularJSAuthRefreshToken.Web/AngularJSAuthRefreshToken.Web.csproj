@@ -1117,6 +1117,7 @@
     <Compile Include="AspNetIdentity\RoleValidator.cs" />
     <Compile Include="AspNetIdentity\UserValidator.cs" />
     <Compile Include="Controllers\Api\AccountController.cs" />
+    <Compile Include="Controllers\Api\Bindings\IPrincipalParameterBinding.cs" />
     <Compile Include="Controllers\Api\Filters\ValidationFilterAttribute.cs" />
     <Compile Include="Controllers\Api\TestController.cs" />
     <Compile Include="Controllers\EaController.cs" />

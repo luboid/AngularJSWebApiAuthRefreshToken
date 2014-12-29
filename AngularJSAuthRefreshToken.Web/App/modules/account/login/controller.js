@@ -18,11 +18,7 @@
               this.submitForm = function () {
                   if (this.form.$valid) {
                       authentication.logIn(this.model)
-                          .then(function () {
-                              if (ctrl.modal) {
-                                  $scope.$close(true);
-                              }
-                          }, function (error) {
+                          .catch(function (error) {
                               utils.errorContext.set(ctrl, error.error_description);
                           });
                   }

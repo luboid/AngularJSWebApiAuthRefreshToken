@@ -105,11 +105,11 @@ namespace AngularJSAuthRefreshToken.Web.Models.Api
     {
         [Required]
         [Display(Name = "Login provider")]
-        public string LoginProvider { get; set; }
+        public string Provider { get; set; }
 
         [Required]
         [Display(Name = "Provider key")]
-        public string ProviderKey { get; set; }
+        public string Key { get; set; }
     }
 
     public class SetPasswordBindingModel

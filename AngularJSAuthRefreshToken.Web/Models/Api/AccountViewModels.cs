@@ -7,22 +7,15 @@ namespace AngularJSAuthRefreshToken.Web.Models.Api
 
     public class ExternalLoginViewModel
     {
-        public string Name { get; set; }
-
+        public string Provider { get; set; }
+        public string Caption { get; set; }
         public string Url { get; set; }
-
         public string State { get; set; }
     }
 
-    public class ManageInfoViewModel
+    public class ProfileViewModel
     {
-        public string LocalLoginProvider { get; set; }
-
-        public string Email { get; set; }
-
-        public IEnumerable<UserLoginInfoViewModel> Logins { get; set; }
-
-        public IEnumerable<ExternalLoginViewModel> ExternalLoginProviders { get; set; }
+        public IEnumerable<UserLoginProvidersViewModel> Logins { get; set; }
     }
 
     //public class UserInfoViewModel
@@ -36,9 +29,9 @@ namespace AngularJSAuthRefreshToken.Web.Models.Api
     //    public string LoginProvider { get; set; }
     //}
 
-    public class UserLoginInfoViewModel
+    public class UserLoginProvidersViewModel
     {
-        public string LoginProvider { get; set; }
-        public string ProviderKey { get; set; }
+        public string Provider { get; set; }
+        public string Key { get; set; }
     }
 }

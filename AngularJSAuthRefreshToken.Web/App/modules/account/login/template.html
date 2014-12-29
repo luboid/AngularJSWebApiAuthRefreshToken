@@ -58,8 +58,7 @@
             <hr />
             <div id="socialLoginList">
                 <p><a ng-repeat="external in ctrl.externalLogins" class="btn btn-default btn-block" 
-                      ng-click="ctrl.externalLogin(external)" 
-                      target="_blank">{{external.name}}</a></p>
+                      ng-click="ctrl.externalLogin(external)">{{external.caption}}</a></p>
             </div>
         </section>
     </div>
