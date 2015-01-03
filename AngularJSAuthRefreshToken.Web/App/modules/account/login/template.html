@@ -1,0 +1,55 @@
+﻿<h2>LogIn.</h2>
+<div class="row">
+    <div class="col-md-7">
+        <section id="loginForm">
+            <form name="ctrl.form" class="form-horizontal" role="form" novalidate="novalidate" ng-submit="ctrl.submitForm()">
+                <h4>Local profile.</h4>
+                <hr />
+                <bk-alert type="danger" timeout="default" hide="ctrl.error.hidden">
+                    <div ng-bind-html="ctrl.error.message"></div>
+                </bk-alert>
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="email">User (email)</label>
+                    <div class="col-md-9">
+                        <input type="email" id="email" name="email" class="form-control" required
+                               ng-model="ctrl.model.userName"
+                               bk-auto-focus />
+                        <bk-error-text class="help-block"
+                                       bk-input-name="email"
+                                       bk-msg-required="Required."
+                                       bk-msg-email="Invalid email address." />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="password">Password</label>
+                    <div class="col-md-9">
+                        <input type="password" id="password" name="password" class="form-control" required ng-model="ctrl.model.password" />
+                        <bk-error-text class="help-block"
+                                       bk-input-name="password"
+                                       bk-msg-required="Required." />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-3 col-md-9">
+                        <button type="submit" class="btn btn-primary" bk-disable-pristine>LogIn</button>
+                    </div>
+                </div>
+                <div ng-show="!ctrl.modal">
+                    <p><a ui-sref="account.signup" class="btn btn-link">Sing Up</a></p>
+                    <p><a ui-sref="account.forgotpassword" class="btn btn-link">Forgotten password</a></p>
+                </div>
+            </form>
+        </section>
+        <br />
+    </div>
+    <div class="col-md-5">
+        <section id="socialLoginForm">
+            <h4>Public profile services.</h4>
+            <hr />
+            <div id="socialLoginList">
+                <p><a ng-repeat="external in ctrl.externalLogins" class="btn btn-default btn-block"
+                      bk-click-direct="ctrl.externalLogin(external)">{{external.caption}}</a></p>
+            </div>
+        </section>
+    </div>
+</div>

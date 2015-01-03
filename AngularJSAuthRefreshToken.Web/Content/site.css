@@ -1,0 +1,233 @@
+﻿body {
+    padding-top: 4em;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* styles for validation helpers */
+.field-validation-error {
+    color: #b94a48;
+}
+
+.field-validation-valid {
+    display: none;
+}
+
+input.input-validation-error {
+    border: 1px solid #b94a48;
+}
+
+input[type="checkbox"].input-validation-error {
+    border: 0 none;
+}
+
+.validation-summary-errors {
+    color: #b94a48;
+}
+
+.validation-summary-valid {
+    display: none;
+}
+
+.splash {
+  display: none;
+}
+
+[ng-cloak].splash {
+  display: block !important;
+}
+
+a[ng-click] {
+    cursor:pointer;
+}
+
+label[for] {
+    cursor:pointer;
+}
+
+.bk-odd {
+    background-color: #f9f9f9;
+}
+
+.bk-even {
+    background-color: transparent;
+}
+
+.tab-content/*.bk-tab-content*/ {
+    padding:10px 0;
+}
+
+.bk-tabset .nav > li > a {
+    padding:5px 15px;
+}
+
+.bk-progress-loading .progress-bar {
+    width: 100%;
+}
+
+.bk-search {
+    padding: 10px 0;
+}
+
+.bk-grid .pagination li.active > a {
+    cursor: pointer;
+    display: block;
+}
+
+
+.bk-grid-pager {
+}
+
+.bk-grid-pager .pagination {
+    margin: 10px 0;
+}
+
+.bk-grid-pager .bk-grid-page-sizes {
+    margin: 10px 0;
+}
+
+.bk-grid-nodata {
+    margin-top: 10px;
+}
+
+.bk-grid-table {
+    position: relative;
+}
+
+    .bk-grid-table thead th {
+        text-align:center;
+    }
+
+    .bk-grid-table th.right {
+        text-align:right !important;
+    }
+
+    .bk-grid-table th.left {
+        text-align:left !important;
+    }
+
+    .bk-grid-table thead th a {
+        display:block;
+        width:100%;
+    }
+
+    .bk-grid-table table {
+        margin:0;
+    }
+
+    .bk-grid-table td.right {
+        text-align:right;
+    }
+
+    .bk-grid-table td.center {
+        text-align:center;
+    }
+
+    .bk-grid-table .progress {
+        width: 50%;
+        position: absolute;
+        left: 25%;
+        top: 49%;
+    }
+
+    .bk-grid-table .table-responsive {
+        margin-top:10px;
+        margin-bottom:10px;
+    }
+
+th {
+    text-align:center;
+}
+
+.modal .container .modal-dialog {
+    width:auto;
+    height:auto;
+}
+
+.modal .container .modal-content {
+    width:auto;
+    height:auto;
+}
+
+.modal-content .panel {
+    margin-bottom:auto;
+}
+
+.bk-number-lg {
+    max-width:13em;
+    text-align:right;
+}
+    
+    .bk-number-lg:focus {
+        text-align:left;
+    }
+
+.bk-number-md {
+    max-width:5.5em;
+    text-align:right;
+}
+    
+    .bk-number-md:focus {
+        text-align:left;
+    }
+
+.bk-number {
+    text-align:right;
+}
+    
+    .bk-number:focus {
+        text-align:left;
+    }
+
+.text-bold {
+    font-weight:bold
+}
+
+.text-italic {
+    font-style:italic
+}
+
+.margin-bottom {
+    margin-bottom:10px;
+}
+
+.margin-top {
+    margin-top:10px;
+}
+
+.margin-both {
+    margin: 10px 0;
+}
+
+.padding-bottom {
+    padding-bottom:10px;
+}
+
+.padding-top {
+    padding-top:10px;
+}
+
+.padding-both {
+    padding: 10px 0;
+}
+
+/* Fix for Bootstrap 3 with Angular UI Bootstrap */
+.modal { 
+	display: block;
+}
+
+/* Custom dialog/modal headers */
+
+.dialog-header-error { background-color: #a94442; }
+.dialog-header-wait { background-color: #245269; }
+.dialog-header-notify { background-color: #245269; }
+.dialog-header-confirm { background-color:  #8a6d3b; }
+	.dialog-header-error span, .dialog-header-error h4,
+	.dialog-header-wait span, .dialog-header-wait h4,
+	.dialog-header-confirm span, .dialog-header-confirm h4 { color: #ffffff; }
+
+/* Ease Display */

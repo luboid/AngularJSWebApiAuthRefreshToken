@@ -1,0 +1,109 @@
+﻿<h2>Profile.</h2>
+<accordion>
+    <accordion-group heading="Set password" is-disabled="ctrl.addPasswordDisabled" is-open="ctrl.addPassword.open">
+        <form name="ctrl.addPassword.form" class="form-horizontal" role="form" novalidate="novalidate" ng-submit="ctrl.addPassword.submitForm()">
+            <bk-alert type="danger" timeout="default" hide="ctrl.addPassword.error.hidden">
+                <div ng-bind-html="ctrl.addPassword.error.message"></div>
+            </bk-alert>
+            <bk-alert type="success" timeout="default" hide="ctrl.addPassword.info.hidden" close="ctrl.addPassword.hide()">
+                <div ng-bind-html="ctrl.addPassword.info.message"></div>
+            </bk-alert>
+            <div class="form-group">
+                <label class="col-md-2 control-label" for="password">Password</label>
+                <div class="col-md-10">
+                    <input type="password" id="newPassword" name="newPassword" class="form-control"
+                           required
+                           ng-model="ctrl.addPassword.model.newPassword"
+                           bk-server-model
+                           bk-auto-focus="ctrl.addPassword.open" />
+                    <bk-error-text class="help-block"
+                                   bk-input-name="newPassword"
+                                   bk-messages="ctrl.messages" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label" for="confirmPassword">Confirm</label>
+                <div class="col-md-10">
+                    <input type="password" id="confirmPassword" name="confirmPassword" class="form-control"
+                           required
+                           ng-model="ctrl.addPassword.model.confirmPassword"
+                           bk-server-model />
+                    <bk-error-text class="help-block"
+                                   bk-input-name="confirmPassword"
+                                   bk-messages="ctrl.messages" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <button type="submit" class="btn btn-primary" bk-disable-pristine>Set</button>
+                </div>
+            </div>
+        </form>
+    </accordion-group>
+    <accordion-group heading="Password change" is-disabled="!ctrl.addPasswordDisabled" is-open="ctrl.changePassword.open">
+        <form name="ctrl.changePassword.form" class="form-horizontal" role="form" novalidate="novalidate" ng-submit="ctrl.changePassword.submitForm()">
+            <bk-alert type="danger" timeout="default" hide="ctrl.changePassword.error.hidden">
+                <div ng-bind-html="ctrl.changePassword.error.message"></div>
+            </bk-alert>
+            <bk-alert type="success" timeout="default" hide="ctrl.changePassword.info.hidden">
+                <div ng-bind-html="ctrl.changePassword.info.message"></div>
+            </bk-alert>
+            <div class="form-group">
+                <label class="col-md-2 control-label" for="password">Old password</label>
+                <div class="col-md-10">
+                    <input type="password" id="oldPassword" name="oldPassword" class="form-control"
+                           required
+                           ng-model="ctrl.changePassword.model.oldPassword"
+                           bk-server-model
+                           bk-auto-focus="ctrl.changePassword.open" />
+                    <bk-error-text class="help-block"
+                                   bk-input-name="oldPassword"
+                                   bk-messages="ctrl.messages" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label" for="password">New password</label>
+                <div class="col-md-10">
+                    <input type="password" id="newPassword" name="newPassword" class="form-control"
+                           required
+                           ng-model="ctrl.changePassword.model.newPassword"
+                           bk-server-model />
+                    <bk-error-text class="help-block"
+                                   bk-input-name="newPassword"
+                                   bk-messages="ctrl.messages" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label" for="confirmPassword">Confirm password</label>
+                <div class="col-md-10">
+                    <input type="password" id="confirmPassword" name="confirmPassword" class="form-control"
+                           required
+                           ng-model="ctrl.changePassword.model.confirmPassword"
+                           bk-server-model />
+                    <bk-error-text class="help-block"
+                                   bk-input-name="confirmPassword"
+                                   bk-messages="ctrl.messages" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <button type="submit" class="btn btn-primary" bk-disable-pristine>Промени</button>
+                </div>
+            </div>
+        </form>
+    </accordion-group>
+    <accordion-group heading="LogIn services">
+        <div class="row">
+            <div class="col-md-4">
+                <h4>Active.</h4>
+                <a ng-repeat="login in ctrl.activeLogins" class="btn btn-default btn-block"
+                   ng-click="ctrl.removeLogin(login)"><i class="glyphicon glyphicon-remove"></i>&nbsp;&nbsp;{{login.caption}}</a>
+            </div>
+            <div class="col-md-4">
+                <h4>Add public service.</h4>
+                <a ng-repeat="login in ctrl.othersLogins" class="btn btn-default btn-block"
+                   bk-click-direct="ctrl.addLogin(login)"><i class="glyphicon glyphicon-plus"></i>&nbsp;&nbsp;{{login.caption}}</a>
+            </div>
+        </div>
+    </accordion-group>
+</accordion>

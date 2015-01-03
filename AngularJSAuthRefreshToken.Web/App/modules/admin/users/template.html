@@ -1,0 +1,32 @@
+﻿<h1>Users</h1>
+<div class="row bk-search">
+    <div class="col-md-12 col-sm-12 col-lg-12">
+        <bk-search-filter items="ctrl.columns"
+                          context="ctrl.browserContext"
+                          execute="ctrl.goFromBegining()" />
+    </div>
+</div>
+<div class="row bk-grid" bk-preload="ctrl.goFromBegining()">
+    <div class="col-md-12">
+        <script type="text/ng-template" id="browserRowButtons.html">
+            <span>
+                <a ng-click="ctrl.info(row)" class="btn btn-default btn-xs" title="info ...">
+                    <i class="glyphicon glyphicon-info-sign"></i>
+                </a>
+                <a ng-click="ctrl.roles(row)" class="btn btn-default btn-xs" title="roles ...">
+                    <i class="glyphicon glyphicon-edit"></i>
+                </a>
+            </span>
+        </script>
+        <div class="bk-grid-table"
+             bk-columns="ctrl.columns"
+             bk-rows="ctrl.rows"
+             bk-context="ctrl.browserContext"
+             bk-refresh="ctrl.goFromBegining()"
+             bk-template-url="browserRowButtons.html"></div>
+        <div class="bk-grid-pager"
+             bk-context="ctrl.browserContext"
+             bk-row-count="ctrl.rowCount"
+             bk-refresh="ctrl.reload()"></div>
+    </div>
+</div>

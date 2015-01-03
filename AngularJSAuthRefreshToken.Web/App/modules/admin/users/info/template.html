@@ -1,0 +1,76 @@
+﻿<div class="modal-header">
+    <h3 class="modal-title">Информация за потребител</h3>
+</div>
+<div class="modal-body">
+    <table class="table table-striped table-condensed table-bordered">
+        <tbody>
+            <tr>
+                <td class="text-right">User name</td>
+                <td>{{info.user.userName}}</td>
+            </tr>
+            <tr>
+                <td class="text-right">Email</td>
+                <td>{{info.user.email}}<span ng-show="info.user.emailConfirmed">,&nbsp;Confirmed</span></td>
+            </tr>
+            <tr>
+                <td class="text-right">Телфон</td>
+                <td>{{info.user.phoneNumber}}<span ng-show="info.user.phoneNumberConfirmed">,&nbsp;Confirmed</span></td>
+            </tr>
+            <tr>
+                <td class="text-right">Two factor authentication</td>
+                <td>{{info.user.twoFactorEnabled?'Yes':'No'}}</td>
+            </tr>
+            <tr>
+                <td class="text-right">Profile lockout enabled</td>
+                <td>{{info.user.lockoutEnabled?'Yes':'No'}}</td>
+            </tr>
+            <tr>
+                <td class="text-right">Access failed count</td>
+                <td>{{info.user.accessFailedCount?info.user.accessFailedCount:'none'}}</td>
+            </tr>
+            <tr>
+                <td class="text-right">Lockout until</td>
+                <td>{{info.user.lockoutEndDateUtc|date:'medium'}}</td>
+            </tr>
+        </tbody>
+    </table>
+    <table ng-if="info.roles && info.roles.length" class="table table-striped table-condensed table-bordered">
+        <thead>
+            <tr>
+                <th>Roles</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><span ng-repeat="role in info.roles">{{role}}{{$last?'':',&nbsp;'}}</span></td>
+            </tr>
+        </tbody>
+    </table>
+    <table ng-if="info.logins && info.logins.length" class="table table-striped table-condensed table-bordered">
+        <thead>
+            <tr>
+                <th>LogIn services</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><span ng-repeat="login in info.logins">{{login}}{{$last?'':',&nbsp;'}}</span></td>
+            </tr>
+        </tbody>
+    </table>
+    <table ng-if="info.claims && info.claims.length" class="table table-striped table-condensed table-bordered">
+        <thead>
+            <tr>
+                <th>Claims/Rights</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td ng-repeat="claim in info.claims"><h4>{{claim.value}}<br /><small>{{claim.type}}</small></h4></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div class="modal-footer">
+    <a class="btn btn-link" ng-click="$dismiss('cancel')">Close</a>
+</div>

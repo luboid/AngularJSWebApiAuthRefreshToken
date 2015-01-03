@@ -1,0 +1,39 @@
+﻿<h1>Roles</h1>
+<div class="row">
+    <div class="col-md-6">
+        <form name="ctrl.create.form" class="form-inline" role="form" novalidate="novalidate" ng-submit="ctrl.create.submitForm()">
+            <div class="form-group">
+                <label class="sr-only" for="name">Role</label>
+                <input type="text" class="form-control" id="name" placeholder="Role ..."
+                       ng-model="ctrl.create.model.name"
+                       required
+                       bk-error-title="ctrl.create.messages"
+                       bk-server-model />
+            </div>
+            <button type="submit" class="btn btn-primary" bk-disable-pristine>Create</button>
+            <button type="button" class="btn btn-default" ng-click="ctrl.load()"><i class="glyphicon glyphicon-refresh"></i> &nbsp;Refresh</button>
+        </form>
+    </div>
+</div>
+<div class="row margin-top">
+    <div class="col-md-6">
+        <table class="table table-striped table-condensed table-bordered">
+            <thead>
+                <tr>
+                    <th style="width:15%">...</th>
+                    <th>Name</th>
+                </tr>
+            </thead>
+            <tbody bk-preload="ctrl.load()">
+                <tr ng-repeat="role in ctrl.roles">
+                    <td class="text-center">
+                        <a ng-click="ctrl.remove(role)" class="btn btn-default btn-xs" title="remove">
+                            <i class="glyphicon glyphicon-remove"></i>
+                        </a>
+                    </td>
+                    <td>{{role.name}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
